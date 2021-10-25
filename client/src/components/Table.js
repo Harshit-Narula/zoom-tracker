@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import FileUpload from './FileUpload'
 import { useHistory } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 
 function Table() {
     const [cur,setCur] = useState("10/25/2021")
     const history = useHistory()//
     const [id, setId] = useState('')
+    const [startDate, setStartDate] = useState(new Date());
     
     const handleClick = () => {
         console.log(`/${id}`)
@@ -53,7 +56,7 @@ function Table() {
                     <button type="button" className="btn btn-dark">Set Meeting Link</button>
                 </div>
             </div>
-            <input type="date" value={cur} onChange={(e) => setCur(e.target.value)} />
+            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
             <table className="table table-striped">
                 <thead>
                     <tr>
