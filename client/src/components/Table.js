@@ -6,32 +6,43 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 
 function Table() {
-    const [cur,setCur] = useState("10/25/2021")
+    // const [cur,setCur] = useState("10/25/2021")
     const history = useHistory()//
     const [id, setId] = useState('')
-    const [startDate, setStartDate] = useState(new Date());
+    const [date, setDate] = useState(formatDate(new Date()));
     const [data, setData] = useState([])
     
     const handleClick = () => {
         console.log(`/${id}`)
         history.push(`/${id}`)
     }
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [year, month, day].join('-');
+    }
+     
+    // console.log(formatDate('Sun May 11,2014'));
     useEffect(async () => {
-        // console.log(date)
-        // changeData()
-        // setCur(new Date("mm:dd:yyyy"))
-        // console.log(cur);
+
     }, [])
 
-    useEffect(async () => {
-        // console.log(date)
-        changeData()
-    }, [startDate])
+    // useEffect(async () => {
+    //     // console.log(date)
+    //     changeData()
+    // }, [startDate])
 
     const changeData = async() => {
         console.log("hi")
-        console.log(startDate.toLocaleDateString("en-US"))
-        let date = startDate.toLocaleDateString("en-US").replaceAll("/","-")
+        // console.log(startDate.toLocaleDateString("en-US"))
         console.log(date)
         try {
             const res = await axios.post('/getAll', { date: `${date}` })
@@ -64,7 +75,6 @@ function Table() {
                     <button type="button" className="btn btn-dark" onClick={handleMeetingLink} >Set Meeting Link</button>
                 </div>
             </div>
-            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
             <table className="table table-striped">
                 <thead>
                     <tr>
