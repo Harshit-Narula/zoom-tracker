@@ -20,9 +20,10 @@ function Client() {
 
 
   useEffect(async() => {
+    console.log("12345")
     try {
-      const res = await axios.post('http://192.168.1.160/update',{uuid:param});
-      console.log(res);
+      const res = await axios.post('http://192.168.1.160:5000/update',{uuid:param.id});
+      console.log(res,"dbdiucbdu");
       // setwebinarDate(res.date);
       // setwebinarTime(res.time);
       // setBatchDetails(res.batchDetails);
@@ -34,11 +35,8 @@ function Client() {
 
   const handleSubmit = async() => {
     try {
-      const res = await axios.post('http://192.168.1.160/updateCount',{uuid:param});
-      console.log(res);
-      // setwebinarDate(res.date);
-      // setwebinarTime(res.time);
-      // setBatchDetails(res.batchDetails);
+      const res = await axios.post('http://192.168.1.160:5000/updateCount',{uuid:param.id});
+      console.log(res,"6789");
     }
     catch (err) {
       console.log(err.message);
@@ -47,11 +45,11 @@ function Client() {
 
   const getWebinarDetails = async () => {
     try {
-      const res = await axios.get('http://192.168.1.160/getWebinarDetails');
+      const res = await axios.get('http://192.168.1.160:5000/getWebinarDetails');
       console.log(res);
-      setwebinarDate(res.date);
-      setwebinarTime(res.time);
-      setBatchDetails(res.batchDetails);
+      setwebinarDate(res.date_of_webinar);
+      setwebinarTime(res.time_of_webinar);
+      setBatchDetails(res.details);
     }
     catch (err) {
       console.log(err.message);
@@ -90,7 +88,8 @@ function Client() {
       <li class="card" id="card_1">
         <div class="card__content">
           <div>
-            <h1>{webinarDate}</h1>
+            <h2 style={{marginTop:'15px'}}>Webinar Details</h2>
+            <h5>{webinarDate}</h5>
             <h2>{webinarTime}</h2>
             <h3>Enter your Details</h3>
             <input
@@ -119,7 +118,7 @@ function Client() {
             </button>
             {link && (
               <a href="https://www.google.com" target="_blank">
-                <button type="button" class="btn btn-primary" onClick={handleClick}>
+                <button type="button" class="btn btn-primary" onClick={handleSubmit}>
                   Join Zoom Meeting
                 </button>
               </a>
