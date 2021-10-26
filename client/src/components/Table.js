@@ -6,11 +6,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 
 function Table() {
-    // const [cur,setCur] = useState("10/25/2021")
-    const history = useHistory()//
+    const history = useHistory()
     const [id, setId] = useState('')
     const [date, setDate] = useState(formatDate(new Date()));
-    // const [data, setData] = useState([])
+    const [data, setData] = useState([])
     
     const handleClick = () => {
         console.log(`/${id}`)
@@ -29,20 +28,12 @@ function Table() {
     
         return [year, month, day].join('-');
     }
-     
-    // console.log(formatDate('Sun May 11,2014'));
+
     useEffect(async () => {
-
-    }, [])
-
-    // useEffect(async () => {
-    //     // console.log(date)
-    //     changeData()
-    // }, [startDate])
+        changeData()
+    }, [date])
 
     const changeData = async() => {
-        console.log("hi")
-        // console.log(startDate.toLocaleDateString("en-US"))
         console.log(date)
         try {
             const res = await axios.post('/getAll', { date: `${date}` })
@@ -75,7 +66,7 @@ function Table() {
                     <button type="button" className="btn btn-dark" onClick={handleMeetingLink} >Set Meeting Link</button>
                 </div>
             </div>
-            <input type="date" value={date} onChange={(e)=>setDate(e.target.value)}/>
+            <input type="date" value={date} onChange={(e)=>setDate(e.target.value)} style={{marginBottom:"15px"}}/>
             <table className="table table-striped">
                 <thead>
                     <tr>
