@@ -8,8 +8,8 @@ uuidv4();
 
 var con = mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: "Pep@coding123",
+    user: "admin",
+    password: "28e2f18ed484b61c46f65310729fda25614816489b69b8d0",
     database: "csv_data"
 });
 
