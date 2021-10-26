@@ -24,14 +24,13 @@ app.use(express.urlencoded({ extended: true }))
 
 // Upload Endpoint
 app.post('/upload', (req, res) => {
-    if (req.files === null) {
-        return res.status(400).json({ msg: 'No file uploaded' });
-    }
+    if (req.files === null) return res.status(400).json({ msg: 'No file uploaded' });
     var csvData = [];
+
     fs.createReadStream(`${__dirname}/client/public/uploads/${file.name}`)
         .pipe(parse({ delimiter: ',' }))
         .on('data', function (csvrow) {
-            console.log(csvrow);
+            // console.log(csvrow);
             //do something with csvrow
             var sql = `INSERT INTO csv_data (name, phone) VALUES ( '${csvrow[0]}', '${csvrow[1]}')`;
             con.query(sql, function (err, result) {
@@ -52,7 +51,6 @@ app.post('/getAll', (req, res) => {
     // }
 
     const date = req.body.date;
-
     var sql = `SELECT * FROM csv_data where date='${date}'`
     con.query(sql, (err, result) => {
         if (err) res.json({
