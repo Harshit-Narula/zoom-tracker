@@ -23,7 +23,7 @@ function Client() {
   useEffect(async() => {
     console.log("12345")
     try {
-      const res = await axios.post('http://192.168.1.160:5000/update',{uuid:param.id});
+      const res = await axios.post('/update',{uuid:param.id});
       console.log(res,"dbdiucbdu");
       // setwebinarDate(res.date);
       // setwebinarTime(res.time);
@@ -36,7 +36,7 @@ function Client() {
 
   const handleSubmit = async() => {
     try {
-      const res = await axios.post('http://192.168.1.160:5000/updateCount',{uuid:param.id});
+      const res = await axios.post('/updateCount',{uuid:param.id});
       console.log(res,"6789");
       console.log(href,"678967896789");
     }
@@ -47,7 +47,7 @@ function Client() {
 
   const getWebinarDetails = async () => {
     try {
-      const res = await axios.get('http://192.168.1.160:5000/getWebinarDetails');
+      const res = await axios.get('/getWebinarDetails');
       console.log(res,"12345");
       setwebinarDate(res.data.result[0].date_of_webinar);
       setwebinarTime(res.data.result[0].time_of_webinar);

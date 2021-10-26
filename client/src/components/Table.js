@@ -37,7 +37,7 @@ function Table() {
     const changeData = async() => {
         console.log(date)
         try {
-            const res = await axios.post("http://192.168.1.160:5000/getAll", { date: `${date}` })
+            const res = await axios.post("/getAll", { date: `${date}` })
             console.log(res)
             setData(res.data.result)
         } catch (err) {
@@ -46,7 +46,7 @@ function Table() {
     }
 
     const clickMeetingLink=async()=>{
-        const res=await axios.post('http://192.168.1.160:5000/enterZoomLink',{
+        const res=await axios.post('/enterZoomLink',{
             link:link
         });
         console.log(res);
