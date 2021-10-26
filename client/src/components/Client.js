@@ -11,11 +11,12 @@ function Client() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [reqGone, setReqGone] = useState(false);
-  const [webinarDate, setwebinarDate] = useState("26th October 2021");
-  const [webinarTime, setwebinarTime] = useState("18:00");
-  const [batchDetails, setBatchDetails] = useState("FJP");
+  const [webinarDate, setwebinarDate] = useState("");
+  const [webinarTime, setwebinarTime] = useState("");
+  const [batchDetails, setBatchDetails] = useState("");
   const [link, setLink] = useState(null);
   const [total, setTotal] = useState("")
+  const [href,setHref] = useState("")
   console.log(param);
 
 
@@ -37,6 +38,7 @@ function Client() {
     try {
       const res = await axios.post('http://192.168.1.160:5000/updateCount',{uuid:param.id});
       console.log(res,"6789");
+      console.log(href,"678967896789");
     }
     catch (err) {
       console.log(err.message);
@@ -46,10 +48,11 @@ function Client() {
   const getWebinarDetails = async () => {
     try {
       const res = await axios.get('http://192.168.1.160:5000/getWebinarDetails');
-      console.log(res);
-      setwebinarDate(res.date_of_webinar);
-      setwebinarTime(res.time_of_webinar);
-      setBatchDetails(res.details);
+      console.log(res,"12345");
+      setwebinarDate(res.data.result[0].date_of_webinar);
+      setwebinarTime(res.data.result[0].time_of_webinar);
+      setBatchDetails(res.data.result[0].details);
+      setHref(res.data.result[0].zoom_link)
     }
     catch (err) {
       console.log(err.message);
@@ -117,7 +120,7 @@ function Client() {
               Submit
             </button>
             {link && (
-              <a href="https://www.google.com" target="_blank">
+              <a href={href} target="_blank">
                 <button type="button" class="btn btn-primary" onClick={handleSubmit}>
                   Join Zoom Meeting
                 </button>
