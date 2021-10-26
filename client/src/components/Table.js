@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 
-function Table({data}) {
+function Table() {
     // const [cur,setCur] = useState("10/25/2021")
     const history = useHistory()//
     const [id, setId] = useState('')
