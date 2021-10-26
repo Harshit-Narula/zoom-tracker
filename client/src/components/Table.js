@@ -5,12 +5,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 
-function Table() {
+function Table({data}) {
     // const [cur,setCur] = useState("10/25/2021")
     const history = useHistory()//
     const [id, setId] = useState('')
     const [date, setDate] = useState(formatDate(new Date()));
-    const [data, setData] = useState([])
+    // const [data, setData] = useState([])
     
     const handleClick = () => {
         console.log(`/${id}`)
@@ -47,7 +47,7 @@ function Table() {
         try {
             const res = await axios.post('/getAll', { date: `${date}` })
             console.log(res)
-            setData(res.data.result)
+            // setData(res.data.result)
         } catch (err) {
             console.log(err)
         }
@@ -75,6 +75,7 @@ function Table() {
                     <button type="button" className="btn btn-dark" onClick={handleMeetingLink} >Set Meeting Link</button>
                 </div>
             </div>
+            <input type="date" value={date} onChange={(e)=>setDate(e.target.value)}/>
             <table className="table table-striped">
                 <thead>
                     <tr>
