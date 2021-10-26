@@ -69,7 +69,7 @@
 		to {
 			transform:
 				scale(calc(
-					1.1
+					1.0
 					-
 					calc(0.1 * var(--reverse-index))
 				));
