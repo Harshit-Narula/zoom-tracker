@@ -19,8 +19,7 @@ const FileUpload = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('file', file);
-
-    try {
+    try{
       const res = await axios.post('http://192.168.1.160:5000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'

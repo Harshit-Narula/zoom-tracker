@@ -19,7 +19,7 @@ function Client() {
 
     const getWebinarDetails=async()=>{
         try{
-            const res=await axios.get('/getWebinarDetails');
+            const res=await axios.get('http://192.168.1.160/getWebinarDetails');
             console.log(res);
             setwebinarDate(res.date);
             setwebinarTime(res.time);

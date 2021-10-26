@@ -37,9 +37,9 @@ function Table() {
     const changeData = async() => {
         console.log(date)
         try {
-            const res = await axios.post('/getAll', { date: `${date}` })
+            const res = await axios.post("http://192.168.1.160:5000/getAll", { date: `${date}` })
             console.log(res)
-            // setData(res.data.result)
+            setData(res.data.result)
         } catch (err) {
             console.log(err)
         }
@@ -78,7 +78,7 @@ function Table() {
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Phone</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Count</th>
                         <th scope="col">Zoom</th>
                     </tr>
@@ -89,10 +89,10 @@ function Table() {
                             <tr>
                                 <th>{idx + 1}</th>
                                 <td>{row.name}</td>
-                                <td>{row.phone}</td>
-                                <td>{row.cur_count}</td>
+                                <td>{row.email}</td>
+                                <td>{row.count}</td>
                                 <td><button type="button" className="btn btn-primary" onClick={() => {
-                                    setId(row.phone)
+                                    setId(row.uuid)
                                 }
                                 }>Zoom</button></td>
                             </tr>
