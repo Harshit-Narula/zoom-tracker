@@ -7,7 +7,7 @@ import Client from './components/Client';
 import axios from 'axios';
 
 const App = () => {
-  const [data, setData] = useState([{ name: "Udai", phone: "9999999999",count:'5'}, { name: "Udai", phone: "9999999999",count:'5'}, { name: "Udai", phone: "9999999999",count:'5'}, { name: "Udai", phone: "9999999999",count:'5'}])
+  const [data, setData] = useState([]);
   useEffect(() => {
     
   }, [])
