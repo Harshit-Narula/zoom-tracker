@@ -6,35 +6,38 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 
 function Table() {
-    const [cur,setCur] = useState("10/25/2021")
-    const history = useHistory()//
+    const history = useHistory()
     const [id, setId] = useState('')
-    const [startDate, setStartDate] = useState(new Date());
+    const [date, setDate] = useState(formatDate(new Date()));
     const [data, setData] = useState([])
+    const [link,setLink]=useState();
     
     const handleClick = () => {
         console.log(`/${id}`)
         history.push(`/${id}`)
     }
-    useEffect(async () => {
-        // console.log(date)
-        // changeData()
-        // setCur(new Date("mm:dd:yyyy"))
-        // console.log(cur);
-    }, [])
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [year, month, day].join('-');
+    }
 
     useEffect(async () => {
-        // console.log(date)
         changeData()
-    }, [startDate])
+    }, [date])
 
     const changeData = async() => {
-        console.log("hi")
-        console.log(startDate.toLocaleDateString("en-US"))
-        let date = startDate.toLocaleDateString("en-US").replaceAll("/","-")
         console.log(date)
         try {
-            const res = await axios.post('/getAll', { date: `${date}` })
+            const res = await axios.post("http://192.168.1.160:5000/getAll", { date: `${date}` })
             console.log(res)
             setData(res.data.result)
         } catch (err) {
@@ -42,26 +45,40 @@ function Table() {
         }
     }
 
+    const clickMeetingLink=async()=>{
+        const res=await axios.post('http://192.168.1.160:5000/enterZoomLink',{
+            link:link
+        });
+        console.log(res);
+    }
+
+    const handleMeetingLink= (e)=>{
+        let val=e.target.value;
+        console.log(e.target.value);
+        setLink(val);
+    }
+
     useEffect(() => {
         handleClick()
     }, [id])
+
 
     return (
         <div>
             <FileUpload />
             <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+                <input onChange={handleMeetingLink}type="text" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" value={link}/>
                 <div className="input-group-append">
-                    <button type="button" className="btn btn-dark">Set Meeting Link</button>
+                    <button type="button" className="btn btn-dark" onClick={clickMeetingLink} >Set Meeting Link</button>
                 </div>
             </div>
-            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+            <input type="date" value={date} onChange={(e)=>setDate(e.target.value)} style={{marginBottom:"15px"}}/>
             <table className="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Phone</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Count</th>
                         <th scope="col">Zoom</th>
                     </tr>
@@ -72,10 +89,10 @@ function Table() {
                             <tr>
                                 <th>{idx + 1}</th>
                                 <td>{row.name}</td>
-                                <td>{row.phone}</td>
-                                <td>{row.cur_count}</td>
+                                <td>{row.email}</td>
+                                <td>{row.count}</td>
                                 <td><button type="button" className="btn btn-primary" onClick={() => {
-                                    setId(row.phone)
+                                    setId(row.uuid)
                                 }
                                 }>Zoom</button></td>
                             </tr>

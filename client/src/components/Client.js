@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import "./style.css";
 import validator from "validator";
 import axios from 'axios';
+import webinarImage from '../images/webinar.jpg'
 
 function Client() {
   const param = useParams();
@@ -10,15 +11,15 @@ function Client() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [reqGone, setReqGone] = useState(false);
-  const [webinarDate,setwebinarDate]=useState();
-  const [webinarTime,setwebinarTime]=useState();
-  const [batchDetails,setBatchDetails]=useState();
+  const [webinarDate,setwebinarDate]=useState("26th October 2021");
+  const [webinarTime,setwebinarTime]=useState("18:00");
+  const [batchDetails,setBatchDetails]=useState("FJP");
   const [link, setLink] = useState(null);
   console.log(param);
 
     const getWebinarDetails=async()=>{
         try{
-            const res=await axios.get('/getWebinarDetails');
+            const res=await axios.get('http://192.168.1.160/getWebinarDetails');
             console.log(res);
             setwebinarDate(res.date);
             setwebinarTime(res.time);
@@ -69,8 +70,8 @@ function Client() {
       <li class="card" id="card_1">
         <div class="card__content">
           <div>
-              <h1>26th October 2021</h1>
-              <h2>18:00</h2>
+              <h1>{webinarDate}</h1>
+              <h2>{webinarTime}</h2>
             <h3>Enter your Details</h3>
             <input
               type="text"
@@ -106,10 +107,11 @@ function Client() {
           </div>
           <figure>
             <img
-              src="https://codyhouse.co/demo-tutorials/stacking-cards/assets/img/img-1.jpg"
+              src={webinarImage}
               alt=" description"
             />
           </figure>
+          <h1>{batchDetails}</h1>
         </div>
       </li>
     </div>

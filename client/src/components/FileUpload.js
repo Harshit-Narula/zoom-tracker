@@ -15,13 +15,12 @@ const FileUpload = () => {
     setFilename(e.target.files[0].name);
   };
 
-  const onSubmit = async e => {
+  const onSubmit = async e => { 
     e.preventDefault();
     const formData = new FormData();
     formData.append('file', file);
-
-    try {
-      const res = await axios.post('/upload', formData, {
+    try{
+      const res = await axios.post('http://192.168.1.160:5000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -35,19 +34,18 @@ const FileUpload = () => {
       });
       
       // Clear percentage
+      if(res.data.success==0) throw new Error(res.data.error)
       setTimeout(() => setUploadPercentage(0), 10000);
-
       const { fileName, filePath } = res.data;
-
       setUploadedFile({ fileName, filePath });
-
       setMessage('File Uploaded');
     } catch (err) {
-      if (err.response.status === 500) {
-        setMessage('There was a problem with the server');
-      } else {
-        setMessage(err.response.data.msg);
-      }
+      // if (err.response.status === 200) {
+        
+      // } else {
+      //   setMessage(err.response.data.msg);
+      // }
+      setMessage('There was a problem with the server');
       setUploadPercentage(0)
     }
   };
