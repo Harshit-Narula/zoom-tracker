@@ -10,42 +10,41 @@ function Table() {
     const history = useHistory()//
     const [id, setId] = useState('')
     const [startDate, setStartDate] = useState(new Date());
+    const [data, setData] = useState([])
     
     const handleClick = () => {
         console.log(`/${id}`)
         history.push(`/${id}`)
     }
-    const [data, setData] = useState([])
     useEffect(async () => {
         // console.log(date)
         // changeData()
-        setCur(new Date("mm:dd:yyyy"))
-        console.log(cur);
+        // setCur(new Date("mm:dd:yyyy"))
+        // console.log(cur);
     }, [])
 
-    // useEffect(async () => {
-    //     // console.log(date)
-    //     // changeData()
-    // }, [date])
+    useEffect(async () => {
+        // console.log(date)
+        changeData()
+    }, [startDate])
 
     const changeData = async() => {
         console.log("hi")
+        console.log(startDate.toLocaleDateString("en-US"))
+        let date = startDate.toLocaleDateString("en-US").replaceAll("/","-")
+        console.log(date)
         try {
-            // const res = await axios.post('/getAll', { date: date })
-            // console.log(res)
-            // setData(r/es.data.result)
+            const res = await axios.post('/getAll', { date: `${date}` })
+            console.log(res)
+            setData(res.data.result)
         } catch (err) {
             console.log(err)
         }
     }
 
-    // useEffect(() => {
-    //     handleClick()
-    // }, [id])
-
-    // useEffect(()=>{
-    //     setDate(cur.toISOString().substr(0, 10))
-    // },[cur])
+    useEffect(() => {
+        handleClick()
+    }, [id])
 
     return (
         <div>
