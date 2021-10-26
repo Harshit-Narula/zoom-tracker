@@ -16,7 +16,8 @@
     "csv-parse": "^4.16.3",
     "express": "^4.16.4",
     "express-fileupload": "^1.1.4",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
