@@ -11,47 +11,65 @@ function Client() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [reqGone, setReqGone] = useState(false);
-  const [webinarDate,setwebinarDate]=useState("26th October 2021");
-  const [webinarTime,setwebinarTime]=useState("18:00");
-  const [batchDetails,setBatchDetails]=useState("FJP");
+  const [webinarDate, setwebinarDate] = useState("26th October 2021");
+  const [webinarTime, setwebinarTime] = useState("18:00");
+  const [batchDetails, setBatchDetails] = useState("FJP");
   const [link, setLink] = useState(null);
+  const [total, setTotal] = useState("")
   console.log(param);
 
-    const getWebinarDetails=async()=>{
-        try{
-            const res=await axios.get('http://192.168.1.160/getWebinarDetails');
-            console.log(res);
-            setwebinarDate(res.date);
-            setwebinarTime(res.time);
-            setBatchDetails(res.batchDetails);
-        }
-        catch(err){
-            console.log(err.message);
-        }
+
+  useEffect(async() => {
+    console.log("12345")
+    try {
+      const res = await axios.post('http://192.168.1.160:5000/update',{uuid:param.id});
+      console.log(res,"dbdiucbdu");
+      // setwebinarDate(res.date);
+      // setwebinarTime(res.time);
+      // setBatchDetails(res.batchDetails);
     }
+    catch (err) {
+      console.log(err.message);
+    }
+  }, [])
 
-    useEffect(()=>{
-        getWebinarDetails();
-    },[]);
+  const handleSubmit = async() => {
+    try {
+      const res = await axios.post('http://192.168.1.160:5000/updateCount',{uuid:param.id});
+      console.log(res,"6789");
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  }
 
+  const getWebinarDetails = async () => {
+    try {
+      const res = await axios.get('http://192.168.1.160:5000/getWebinarDetails');
+      console.log(res);
+      setwebinarDate(res.date_of_webinar);
+      setwebinarTime(res.time_of_webinar);
+      setBatchDetails(res.details);
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  }
 
-
+  useEffect(() => {
+    getWebinarDetails();
+  }, []);
 
   const handleClick = () => {
-    //request for count ++
-    //set link
     let isPhone = validatePhoneNumber(phone);
     let isEmail = validateEmail(email);
-    
+
     if (isPhone && isEmail) {
-    //get the salesperson from db using uuid from params
-    //count++ kro
-    
-    setReqGone(true);
-    setLink("ononoivn");
+      setReqGone(true);
+      setLink("ononoivn");
     }
-    else{
-        alert("Please enter valid email or/and phone")
+    else {
+      alert("Please enter valid email or/and phone")
     }
   };
 
@@ -70,8 +88,9 @@ function Client() {
       <li class="card" id="card_1">
         <div class="card__content">
           <div>
-              <h1>{webinarDate}</h1>
-              <h2>{webinarTime}</h2>
+            <h2 style={{marginTop:'15px'}}>Webinar Details</h2>
+            <h5>{webinarDate}</h5>
+            <h2>{webinarTime}</h2>
             <h3>Enter your Details</h3>
             <input
               type="text"
@@ -98,12 +117,12 @@ function Client() {
               Submit
             </button>
             {link && (
-        <a href="https://www.google.com" target="_blank">
-          <button type="button" class="btn btn-primary">
-            Join Zoom Meeting
-          </button>
-        </a>
-      )}
+              <a href="https://www.google.com" target="_blank">
+                <button type="button" class="btn btn-primary" onClick={handleSubmit}>
+                  Join Zoom Meeting
+                </button>
+              </a>
+            )}
           </div>
           <figure>
             <img
