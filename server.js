@@ -32,7 +32,7 @@ app.post('/upload', (req, res) => {
         .on('data', function (csvrow) {
             // console.log(csvrow);
             //do something with csvrow
-            var sql = `INSERT INTO csv_data (name, phone) VALUES ( '${csvrow[0]}', '${csvrow[1]}')`;
+            var sql = `INSERT INTO csv_data VALUES ('${csvrow[0]}', '${csvrow[1]}','${csvrow[3]}', '${csvrow[4]}','${csvrow[5]}', '${csvrow[6]}')`;
             con.query(sql, function (err, result) {
                 if (err) throw err;
                 console.log(" record inserted");
@@ -46,10 +46,6 @@ app.post('/upload', (req, res) => {
 });
 
 app.post('/getAll', (req, res) => {
-    // if (req.files === null) {
-    //   return res.status(400).json({ msg: 'No file uploaded' });
-    // }
-
     const date = req.body.date;
     var sql = `SELECT * FROM csv_data where date='${date}'`
     con.query(sql, (err, result) => {
@@ -61,5 +57,32 @@ app.post('/getAll', (req, res) => {
         })
     })
 });
+
+app.get("/getWebinarDetails", (req, res) => {
+    var sql = `SELECT DISTINCT date ,image_url, date_of_webinar, batch_details where date = ${req.body.date}`;
+    con.query(sql, (err, result) => {
+        if (err) res.json({
+            success: false,
+            error: err.message
+        })
+        res.json({
+            success: true,
+            result
+        })
+    })
+})
+app.post("/enterZoomLink", (req, res) => {
+    var sql = `INSERT INTO csv_data(zoom_link) VALUES ('${req.body.link}') where date = now()`;
+    con.query(sql, (err, result) => {
+        if (err) res.json({
+            success: false,
+            error: err.message
+        })
+        res.json({
+            success: true,
+            result
+        })
+    })
+})
 
 app.listen(5000, () => console.log('Server Started...'));
