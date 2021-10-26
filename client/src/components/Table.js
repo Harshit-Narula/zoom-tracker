@@ -11,6 +11,7 @@ function Table() {
     const [id, setId] = useState('')
     const [date, setDate] = useState(formatDate(new Date()));
     const [data, setData] = useState([])
+    const [link,setLink]=useState();
     
     const handleClick = () => {
         console.log(`/${id}`)
@@ -53,12 +54,17 @@ function Table() {
         }
     }
 
-    const handleMeetingLink=async ()=>{
-        const res=axios.post('/enterZoomLink',{
-            // link:link
+    const clickMeetingLink=async()=>{
+        const res=await axios.post('http://192.168.1.160:5000/enterZoomLink',{
+            link:link
         });
         console.log(res);
-        // setLink()
+    }
+
+    const handleMeetingLink= (e)=>{
+        let val=e.target.value;
+        console.log(e.target.value);
+        setLink(val);
     }
 
     useEffect(() => {
@@ -70,9 +76,9 @@ function Table() {
         <div>
             <FileUpload />
             <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+                <input onChange={handleMeetingLink}type="text" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" value={link}/>
                 <div className="input-group-append">
-                    <button type="button" className="btn btn-dark" onClick={handleMeetingLink} >Set Meeting Link</button>
+                    <button type="button" className="btn btn-dark" onClick={clickMeetingLink} >Set Meeting Link</button>
                 </div>
             </div>
             <table className="table table-striped">
