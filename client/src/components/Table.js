@@ -79,17 +79,19 @@ function Table() {
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Count</th>
+                        <th scope="col">Traffic Count</th>
+                        <th scope="col">Joined Count</th>
                         <th scope="col">Zoom</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        data.length > 0 && data.map((row, idx) => (
+                        (data && data.length > 0) ? data.map((row, idx) => (
                             <tr>
                                 <th>{idx + 1}</th>
                                 <td>{row.name}</td>
                                 <td>{row.email}</td>
+                                <td>{row.page_open_count}</td>
                                 <td>{row.count}</td>
                                 <td><button type="button" className="btn btn-primary" onClick={() => {
                                     setId(row.uuid)
@@ -97,6 +99,8 @@ function Table() {
                                 }>Zoom</button></td>
                             </tr>
                         ))
+                        :
+                        <h2>No Records found</h2>
                     }
                 </tbody>
             </table>
