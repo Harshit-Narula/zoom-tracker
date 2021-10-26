@@ -42,13 +42,13 @@ function Table() {
         }
     }
 
-    // const handleMeetingLink=async ()=>{
-    //     const res=axios.post('/enterZoomLink',{
-    //         link:link
-    //     });
-    //     console.log(res);
-    //     setLink()
-    // }
+    const handleMeetingLink=async ()=>{
+        const res=axios.post('/enterZoomLink',{
+            // link:link
+        });
+        console.log(res);
+        // setLink()
+    }
 
     useEffect(() => {
         handleClick()
@@ -61,7 +61,7 @@ function Table() {
             <div className="input-group mb-3">
                 <input type="text" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" />
                 <div className="input-group-append">
-                    <button type="button" className="btn btn-dark" onClick={handleMeetingLink} onChange={}>Set Meeting Link</button>
+                    <button type="button" className="btn btn-dark" onClick={handleMeetingLink} >Set Meeting Link</button>
                 </div>
             </div>
             <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />

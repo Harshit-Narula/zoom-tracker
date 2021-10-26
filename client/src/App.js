@@ -19,7 +19,7 @@ const App = () => {
           <Client/>
         </Route>
         <Route path="/">
-          <div className='container mt-4'>
+          <div className='container mt-4' >
             <h4 className='display-4 text-center mb-4'>
               <i className='fas fa-video' /> Zoom Attendance
             </h4>
